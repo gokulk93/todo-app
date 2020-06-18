@@ -1,0 +1,16 @@
+.pre-scrollable {
+    max-height: 380px;
+    overflow-y: scroll;
+}
+
+.newTodos-text{
+    color: rgba(156, 39, 176, 0.7);
+}
+
+.active-text{
+    color: rgba(3, 169, 244, 0.7);
+}
+
+.completed-text{
+    color: rgba(76, 175, 80, 0.7) ;
+}
