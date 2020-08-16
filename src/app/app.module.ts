@@ -9,6 +9,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { CookieService } from "ngx-cookie-service";
 
+import { IonicStorageModule } from '@ionic/storage';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +20,8 @@ import { CookieService } from "ngx-cookie-service";
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    ChartsModule
+    ChartsModule,
+    IonicStorageModule.forRoot()
     
   ],
   providers: [

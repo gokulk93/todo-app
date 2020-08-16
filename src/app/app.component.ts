@@ -3,6 +3,7 @@ import { Todo } from './todo.model';
 import { TodoDataServiceService } from './todo-data-service.service';
 import { ChartType } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
+import { Plugins } from '@capacitor/core';
 
 
 @Component({
@@ -20,13 +21,14 @@ export class AppComponent {
   constructor(private todoDataService: TodoDataServiceService) { }
 
   public ngOnInit():void{
+    this.doughnutChartData =[[this.todos.length,this.activeTodos.length,this.completedTodos.length]];
 
   }
   title = 'todo-app';
 
 
 
-  doughnutChartLabels: Label[] = ['New Todos', 'Active', 'Done'];
+  doughnutChartLabels: Label[] = ['New Todos', 'Active Todos', 'Done Todos'];
   doughnutChartData: MultiDataSet = [
     [0,0,0]
   ];
@@ -49,10 +51,6 @@ export class AppComponent {
     
   }
 
-  toggleTodoComplete(todo) {
-    this.todoDataService.toggleTodoComplete(todo);
-  }
-
   removeTodo(todo) {
     this.todoDataService.deleteTodoById(todo.id);
     this.doughnutChartData =[[this.todos.length,this.activeTodos.length,this.completedTodos.length]];
@@ -70,6 +68,11 @@ export class AppComponent {
       flag: 3
     });
     this.doughnutChartData =[[this.todos.length,this.activeTodos.length,this.completedTodos.length]];
+  }
+  clearLocalStorage(){
+    this.todoDataService.clearStorage();
+    this.doughnutChartData =[[this.todos.length,this.activeTodos.length,this.completedTodos.length]];
+    
   }
 
   get todos() {

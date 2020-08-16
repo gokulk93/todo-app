@@ -1,0 +1,13 @@
+{
+  "appId": "com.todo.app",
+  "appName": "todo-app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/todo-app",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
