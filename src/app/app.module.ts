@@ -4,12 +4,19 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
-import { CookieService } from "ngx-cookie-service";
 
-import { IonicStorageModule } from '@ionic/storage';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import {HttpClientModule} from '@angular/common/http'
+import {MatDividerModule} from '@angular/material/divider';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import {MatMenuModule} from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+
+
+
 
 @NgModule({
   declarations: [
@@ -19,13 +26,20 @@ import { IonicStorageModule } from '@ionic/storage';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     ChartsModule,
-    IonicStorageModule.forRoot()
+    DragDropModule,
+    HttpClientModule,
+    MatDividerModule,
+    TextFieldModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    
     
   ],
   providers: [
-    CookieService
+    
   ],
   bootstrap: [AppComponent]
 })

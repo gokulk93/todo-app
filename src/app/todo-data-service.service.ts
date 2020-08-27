@@ -3,15 +3,21 @@ import { Todo } from './todo.model';
 
 
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class TodoDataServiceService {
 
-  // Placeholder for todos
+
   todos: Todo[] =[];
+  quickNotes:string;
+
+  
 
   constructor() {
+
     if (localStorage.getItem("todo-key") !=null ){
       if(localStorage.getItem("todo-key").length != 0){
         console.log("local storage available");
@@ -22,10 +28,21 @@ export class TodoDataServiceService {
     }else{
       console.log("local storage null");      
     }
+    if (localStorage.getItem("quick-notes") !=null ){
+      if(localStorage.getItem("quick-notes").length != 0){
+        console.log("local storage available");
+        console.log("Notes::"+localStorage.getItem("quick-notes"));
+        this.quickNotes = localStorage.getItem("quick-notes");
+      }else{
+        console.log("local storage not availabel");      
+      }
+    }else{
+      console.log("local storage null");      
+    }
    }
 
   public ngOnInit():void{
-    // this.todos = JSON.parse(localStorage.getItem("todo-key"));
+
   }
 
   // Simulate POST /todos
@@ -39,11 +56,22 @@ export class TodoDataServiceService {
     }else{
       this.todos.push(todo);
       localStorage.setItem("todo-key", JSON.stringify(this.todos));
-      console.log("New - "+JSON.stringify(this.todos));
-      var result: Todo[] = JSON.parse(localStorage.getItem("todo-key"));
     }
-   
     return this;
+  }
+
+  addNotes(note:string){
+    this.quickNotes = note;
+    localStorage.setItem("quick-notes", this.quickNotes);
+
+  }
+
+
+  loadTodo(todo: Todo[]){
+
+    console.log("Loading the list");
+    this.todos = todo;
+    localStorage.setItem("todo-key", JSON.stringify(this.todos));
   }
 
 
@@ -58,7 +86,7 @@ export class TodoDataServiceService {
 
   // Simulate PUT /todos/:id
   updateTodoById(id: number, values: Object = {}): Todo {
-
+    console.log(values.toString);
     let todo = this.getTodoById(id);
     if (!todo) {
       return null;
@@ -72,9 +100,13 @@ export class TodoDataServiceService {
   clearStorage(){
     console.log("Cleared")
     this.todos=[];
+    this.quickNotes="";
     localStorage.clear();
   }
 
+  getNotes(){
+    return this.quickNotes;
+  }
   // Simulate GET /todos
   getAllTodos(): Todo[] {
     return this.todos;

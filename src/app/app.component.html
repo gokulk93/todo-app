@@ -1,22 +1,213 @@
 
-<nav class="navbar navbar-primary bg-primary">
-  <span class="navbar-brand mb-0 h1">Day to Day Activities</span>
+<!-- NavBar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+      width="30" height="30"
+      viewBox="0 0 172 172"
+      style=" fill:#000000;"><defs><linearGradient x1="52.21633" y1="136.87975" x2="154.757" y2="34.33908" gradientUnits="userSpaceOnUse" id="color-1_HpPqCqynotVp_gr1"><stop offset="0" stop-color="#e67e22"></stop><stop offset="1" stop-color="#2ecc71"></stop></linearGradient></defs><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M87.72,105.049l-34.05958,34.05958l-47.97008,-47.97008c-2.80933,-2.80933 -2.80933,-7.36017 0,-10.1695l23.89008,-23.89008c2.80933,-2.80933 7.36017,-2.80933 10.1695,0z" fill="#e74c3c"></path><path d="M63.77258,149.21717l-23.89008,-23.89008c-2.80933,-2.80933 -2.80933,-7.36017 0,-10.1695l92.36758,-92.37475c2.80933,-2.80933 7.36017,-2.80933 10.1695,0l23.89008,23.89008c2.80933,2.80933 2.80933,7.36017 0,10.1695l-92.37117,92.37475c-2.80575,2.80575 -7.36017,2.80575 -10.16592,0z" fill="url(#color-1_HpPqCqynotVp_gr1)"></path></g></g></svg>
+    {{title}}
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Features
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="" (click)="dynamicDownloadJson()">Download JSON</a>
+          <a class="dropdown-item" href="" data-toggle="modal" data-target="#uploadFileModal">Upload JSON</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="" (click)="clearLocalStorage()">Clear Data</a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>
 
+<!-- Modal -->
+<div class="modal fade" id="uploadFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Upload JSON file</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="fileUpload">Upload the downloaded JSON file</label>
+            <input type="file" class="form-control-file" id="fileUpload" (change)="onSelectedFile($event)">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" #closebutton class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="readFileData()">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="row">
+ <mat-divider ></mat-divider>
+ <br/>
+
+ <div class="container-fluid">
+
+  <div class="row">
+    <div class="input-group mb-3 input-group-lg col-md-3">
+      <input type="text" class="form-control" placeholder="Add todo" [(ngModel)]="newTodo.title" name="todo" (keyup.enter)="addTodo()">
+      <div class="input-group-prepend" (click)="addTodo()">
+        <span class="input-group-text info">
+          <svg width="24" height="24"  viewBox="0 0 16 16" class="bi bi-back" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="todo-container col-md-3">
+      <h2>Todo</h2>
+      <div
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="newData"
+        [cdkDropListConnectedTo]="[activeList]"
+        class="todo-list new-todos-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="todo-box new-todos " *ngFor="let item of newData;let i = index"  cdkDrag 
+                  (mouseover)="isNewShow[i] = true"
+                  (mouseout)="isNewShow[i] = false">
+          
+          <label [hidden]="isNewEditable[i]">{{item.title}}</label>
+
+          <div class="btn-group" [hidden]="!isNewShow[i] || isNewEditable[i]" >
+            <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
+            <a class="btn" (click)="isNewEditable[i] = true"><i class="fa fa-edit"></i></a>
+          </div>
+
+          <div class="input-group " [hidden]="!isNewEditable[i]">
+            <textarea [(ngModel)]="item.title" class="form-control edit-box lb-2" aria-label="Update Field"></textarea>
+            <div class="input-group-prepend">
+              <button class="input-group-text btn-primary" (click)="isNewEditable[i] = false || updateTodo(item)">Save</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="todo-footer" *ngIf="todos.length > 0">
+        <span class="todo-count"><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
+      </div>
+    </div>
+
+    <div class="todo-container col-md-3">
+      <h2>Active</h2>
+      <div
+        cdkDropList
+        #activeList="cdkDropList"
+        [cdkDropListData]="activeData"
+        [cdkDropListConnectedTo]="[todoList,doneList]"
+        class="todo-list active-todos-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="todo-box active-todos" *ngFor="let item of activeData;let i = index" cdkDrag
+              (mouseover)="isActiveShow[i] = true"
+              (mouseout)="isActiveShow[i] = false">
+              <label [hidden]="isActiveEditable[i]">{{item.title}} </label>
+
+              <div class="btn-group" [hidden]="!isActiveShow[i] || isActiveEditable[i]" >
+                <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
+                <a class="btn" (click)="isActiveEditable[i] = true"><i class="fa fa-edit"></i></a>
+              </div>
+    
+              <div class="input-group " [hidden]="!isActiveEditable[i]">
+                <textarea [(ngModel)]="item.title" class="form-control edit-box lb-2" aria-label="Update Field"></textarea>
+                <div class="input-group-prepend">
+                  <button class="input-group-text btn-primary" (click)="isActiveEditable[i] = false || updateTodo(item)">Save</button>
+                </div>
+              </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="todo-container col-md-3">
+      <h2>Done</h2>
+  
+      <div
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListData]="doneData"
+        [cdkDropListConnectedTo]="[activeList]"
+        class="todo-list done-todos-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="todo-box done-todos" *ngFor="let item of doneData;let i = index" cdkDrag
+                  (mouseover)="isDoneShow[i] = true"
+                  (mouseout)="isDoneShow[i] = false">
+
+                  <label><del>{{item.title}}</del></label>
+
+                  <div class="btn-group" [hidden]="!isDoneShow[i]" >
+                    <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
+                  </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <h2>Chart</h2>
+
+      <div class="chart-wrapper">
+        <canvas baseChart 
+          [(data)]="doughnutChartData"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType"
+          [colors]="doughnutChartColors">
+        </canvas>
+      </div>
+    </div>
+  
+  </div>
+
+  <div class="form-group row quick-notes">
+    <h2 for="notes">Quick Notes:</h2>
+    <textarea class="form-control" rows="7" id="notes" [(ngModel)]="quickNotes" (ngModelChange)="addNotes()"></textarea>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<!-- 
+<div class="row" >
   <div class="col-md-3" >
     <div class="todolist new ">
 
       <h1>New Todos</h1>
 
-      <div class="input-group">
+
+      <div class="input-group mb-3 input-group-lg">
         <input type="text" class="form-control" placeholder="Add todo" [(ngModel)]="newTodo.title" name="todo" (keyup.enter)="addTodo()">
-        <div class="input-group-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" (click)="addTodo()" width="24" height="24" viewBox="0 0 24 24">
-            <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/>
-          </svg>
+        <div class="input-group-prepend" (click)="addTodo()">
+          <span class="input-group-text info">
+            
+            <svg width="24" height="24"  viewBox="0 0 16 16" class="bi bi-back" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+            </svg>
+          </span>
+          
         </div>
+        
       </div>
 
       <hr/>
@@ -27,8 +218,9 @@
           <li class="list-group-item d-flex justify-content-between align-items-center">
 
             <label class="newTodos-text">{{todo.title}}</label>
-            <svg xmlns="http://www.w3.org/2000/svg"  (click)="moveToActive(todo)" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M14.064 0a8.75 8.75 0 00-6.187 2.563l-.459.458c-.314.314-.616.641-.904.979H3.31a1.75 1.75 0 00-1.49.833L.11 7.607a.75.75 0 00.418 1.11l3.102.954c.037.051.079.1.124.145l2.429 2.428c.046.046.094.088.145.125l.954 3.102a.75.75 0 001.11.418l2.774-1.707a1.75 1.75 0 00.833-1.49V9.485c.338-.288.665-.59.979-.904l.458-.459A8.75 8.75 0 0016 1.936V1.75A1.75 1.75 0 0014.25 0h-.186zM10.5 10.625c-.088.06-.177.118-.266.175l-2.35 1.521.548 1.783 1.949-1.2a.25.25 0 00.119-.213v-2.066zM3.678 8.116L5.2 5.766c.058-.09.117-.178.176-.266H3.309a.25.25 0 00-.213.119l-1.2 1.95 1.782.547zm5.26-4.493A7.25 7.25 0 0114.063 1.5h.186a.25.25 0 01.25.25v.186a7.25 7.25 0 01-2.123 5.127l-.459.458a15.21 15.21 0 01-2.499 2.02l-2.317 1.5-2.143-2.143 1.5-2.317a15.25 15.25 0 012.02-2.5l.458-.458h.002zM12 5a1 1 0 11-2 0 1 1 0 012 0zm-8.44 9.56a1.5 1.5 0 10-2.12-2.12c-.734.73-1.047 2.332-1.15 3.003a.23.23 0 00.265.265c.671-.103 2.273-.416 3.005-1.148z"></path></svg>
-            <svg xmlns="http://www.w3.org/2000/svg"  (click)="removeTodo(todo)" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"></path></svg>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="new-icon" (click)="moveToActive(todo)" viewBox="0 0 16 16" width="16" fill="currentColor" height="16"><path fill-rule="evenodd" d="M14.064 0a8.75 8.75 0 00-6.187 2.563l-.459.458c-.314.314-.616.641-.904.979H3.31a1.75 1.75 0 00-1.49.833L.11 7.607a.75.75 0 00.418 1.11l3.102.954c.037.051.079.1.124.145l2.429 2.428c.046.046.094.088.145.125l.954 3.102a.75.75 0 001.11.418l2.774-1.707a1.75 1.75 0 00.833-1.49V9.485c.338-.288.665-.59.979-.904l.458-.459A8.75 8.75 0 0016 1.936V1.75A1.75 1.75 0 0014.25 0h-.186zM10.5 10.625c-.088.06-.177.118-.266.175l-2.35 1.521.548 1.783 1.949-1.2a.25.25 0 00.119-.213v-2.066zM3.678 8.116L5.2 5.766c.058-.09.117-.178.176-.266H3.309a.25.25 0 00-.213.119l-1.2 1.95 1.782.547zm5.26-4.493A7.25 7.25 0 0114.063 1.5h.186a.25.25 0 01.25.25v.186a7.25 7.25 0 01-2.123 5.127l-.459.458a15.21 15.21 0 01-2.499 2.02l-2.317 1.5-2.143-2.143 1.5-2.317a15.25 15.25 0 012.02-2.5l.458-.458h.002zM12 5a1 1 0 11-2 0 1 1 0 012 0zm-8.44 9.56a1.5 1.5 0 10-2.12-2.12c-.734.73-1.047 2.332-1.15 3.003a.23.23 0 00.265.265c.671-.103 2.273-.416 3.005-1.148z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="new-icon" (click)="removeTodo(todo)" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"></path></svg>
 
           </li>
         </ul>
@@ -50,6 +242,11 @@
 
             <label class="active-text">{{todo.title}}</label>
 
+            <svg width="24" height="24" (click)="moveToNew(todo)" viewBox="0 0 16 16" class="bi bi-skip-start" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.5 3.5A.5.5 0 0 0 4 4v8a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5z"/>
+              <path fill-rule="evenodd" d="M5.696 8L11.5 4.633v6.734L5.696 8zm-.792-.696a.802.802 0 0 0 0 1.392l6.363 3.692c.52.302 1.233-.043 1.233-.696V4.308c0-.653-.713-.998-1.233-.696L4.904 7.304z"/>
+            </svg>
+            
             <svg xmlns="http://www.w3.org/2000/svg"  (click)="moveToDone(todo)" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M14.064 0a8.75 8.75 0 00-6.187 2.563l-.459.458c-.314.314-.616.641-.904.979H3.31a1.75 1.75 0 00-1.49.833L.11 7.607a.75.75 0 00.418 1.11l3.102.954c.037.051.079.1.124.145l2.429 2.428c.046.046.094.088.145.125l.954 3.102a.75.75 0 001.11.418l2.774-1.707a1.75 1.75 0 00.833-1.49V9.485c.338-.288.665-.59.979-.904l.458-.459A8.75 8.75 0 0016 1.936V1.75A1.75 1.75 0 0014.25 0h-.186zM10.5 10.625c-.088.06-.177.118-.266.175l-2.35 1.521.548 1.783 1.949-1.2a.25.25 0 00.119-.213v-2.066zM3.678 8.116L5.2 5.766c.058-.09.117-.178.176-.266H3.309a.25.25 0 00-.213.119l-1.2 1.95 1.782.547zm5.26-4.493A7.25 7.25 0 0114.063 1.5h.186a.25.25 0 01.25.25v.186a7.25 7.25 0 01-2.123 5.127l-.459.458a15.21 15.21 0 01-2.499 2.02l-2.317 1.5-2.143-2.143 1.5-2.317a15.25 15.25 0 012.02-2.5l.458-.458h.002zM12 5a1 1 0 11-2 0 1 1 0 012 0zm-8.44 9.56a1.5 1.5 0 10-2.12-2.12c-.734.73-1.047 2.332-1.15 3.003a.23.23 0 00.265.265c.671-.103 2.273-.416 3.005-1.148z"></path></svg>
             <svg xmlns="http://www.w3.org/2000/svg"  (click)="removeTodo(todo)" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"></path></svg>
 
@@ -70,6 +267,10 @@
 
             <label class="completed-text" ><del>{{todo.title}}</del></label>
 
+            <svg width="24" height="24" (click)="moveToActive(todo)"  viewBox="0 0 16 16" class="bi bi-skip-start" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.5 3.5A.5.5 0 0 0 4 4v8a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5z"/>
+              <path fill-rule="evenodd" d="M5.696 8L11.5 4.633v6.734L5.696 8zm-.792-.696a.802.802 0 0 0 0 1.392l6.363 3.692c.52.302 1.233-.043 1.233-.696V4.308c0-.653-.713-.998-1.233-.696L4.904 7.304z"/>
+            </svg>
             <svg xmlns="http://www.w3.org/2000/svg"  (click)="removeTodo(todo)" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"></path></svg>
 
           </li>
@@ -91,6 +292,7 @@
     </div>
 
   </div>
-<button type ="button" class="btn btn-danger btn-lg btn-block" (click)="clearLocalStorage()">Clear</button>
+  <button type ="button" class="btn btn-danger btn-lg btn-block" (click)="clearLocalStorage()">Clear</button>
 
 </div>
+ -->
