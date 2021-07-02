@@ -90,9 +90,6 @@ rgba(76, 175, 80, 0.7) ; */
     max-height: 50vh;
   }
 
-  * {
-    box-sizing: border-box;
-  }
 
   .new-todos.todo-box {
     color: rgb(204, 12, 221);
