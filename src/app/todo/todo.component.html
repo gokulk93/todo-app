@@ -1,0 +1,130 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="input-group mb-4">
+        <input type="text" class="form-control" id="addTasks" [(ngModel)]="newTodo.title" (keyup.enter)="addTodo()" placeholder="Enter tasks to add" aria-label="Enter tasks to add" aria-describedby="basic-addon2">
+        <button class="btn btn-outline-secondary" type="button" id="addTasks" (click)="addTodo()">Add Task</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <app-banner  [hidden]="!emptyData"></app-banner>
+  
+   <div class="container-fluid" [hidden]="emptyData">
+  
+    
+    
+   
+    <div class="row">
+      <div class="todo-container col-md-3">
+        <h2>New Tasks</h2>
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="newData"
+          [cdkDropListConnectedTo]="[activeList]"
+          class="todo-list new-todos-list"
+          (cdkDropListDropped)="drop($event)">
+          <label class="text-white" [hidden]="!isNewEmpty" style="padding-top: 4%; padding-left: 25%;">Add tasks you wish to track</label>
+          <div class="todo-box new-todos " *ngFor="let item of newData;let i = index"  cdkDrag 
+                    (mouseover)="isNewShow[i] = true"
+                    (mouseout)="isNewShow[i] = false">
+            
+            <label [hidden]="isNewEditable[i]">{{item.title}}</label>
+  
+            <div class="btn-group" [hidden]="!isNewShow[i] || isNewEditable[i]" >
+              <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
+              <a class="btn" (click)="isNewEditable[i] = true"><i class="fa fa-edit"></i></a>
+            </div>
+  
+
+            <div class="input-group mb-3"  [hidden]="!isNewEditable[i]">
+              <textarea class="form-control " [(ngModel)]="item.title" placeholder="update task" aria-label="Update task" aria-describedby="button-addon2"></textarea>
+              <button class="btn btn-outline-success" type="button" id="update" (click)="isNewEditable[i] = false || updateTodo(item)">Update</button>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="todo-footer" *ngIf="todos.length > 0">
+          <span class="todo-count"><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
+        </div>
+      </div>
+  
+      <div class="todo-container col-md-3">
+        <h2>Progressive</h2>
+        <div
+          cdkDropList
+          #activeList="cdkDropList"
+          [cdkDropListData]="activeData"
+          [cdkDropListConnectedTo]="[todoList,doneList]"
+          class="todo-list active-todos-list"
+          (cdkDropListDropped)="drop($event)" style="width: 100%;">
+          <label class="text-white" [hidden]="!isActiveEmpty"  style="padding-top: 4%; padding-left: 25%;">No active tasks</label>
+          <div class="todo-box active-todos" *ngFor="let item of activeData;let i = index" cdkDrag
+                (mouseover)="isActiveShow[i] = true"
+                (mouseout)="isActiveShow[i] = false">
+                <label [hidden]="isActiveEditable[i]">{{item.title}} </label>
+  
+                <div class="btn-group" [hidden]="!isActiveShow[i] || isActiveEditable[i]" >
+                  <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
+                  <a class="btn" (click)="isActiveEditable[i] = true"><i class="fa fa-edit"></i></a>
+                </div>
+      
+
+
+                <div class="input-group mb-3" [hidden]="!isActiveEditable[i]">
+                  <textarea class="form-control" [(ngModel)]="item.title" placeholder="update task" aria-label="Update task" aria-describedby="button-addon2"></textarea>
+                  <button class="btn btn-outline-success" type="button" id="update" (click)="isActiveEditable[i] = false || updateTodo(item)">Update</button>
+                </div>  
+  
+          </div>
+        </div>
+      </div>
+  
+      <div class="todo-container col-md-3">
+        <h2>Completed</h2>
+    
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="doneData"
+          [cdkDropListConnectedTo]="[activeList]"
+          class="todo-list done-todos-list"
+          (cdkDropListDropped)="drop($event)">
+          <label  class="text-white" [hidden]="!isDoneEmpty" style="padding-top: 4%; padding-left: 25%;">No completed tasks yet</label>
+          <div class="todo-box done-todos" *ngFor="let item of doneData;let i = index" cdkDrag
+                    (mouseover)="isDoneShow[i] = true"
+                    (mouseout)="isDoneShow[i] = false">
+  
+                    <label><del>{{item.title}}</del></label>
+  
+                    <div class="btn-group" [hidden]="!isDoneShow[i]" >
+                      <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
+                    </div>
+  
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-lg-3">
+        <h2>Chart</h2>
+        <div class="chart-wrapper">
+          <canvas baseChart 
+            [(data)]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"
+            [colors]="doughnutChartColors">
+          </canvas>
+        </div>
+      </div>
+    
+    </div>
+  
+  
+  </div>
+  

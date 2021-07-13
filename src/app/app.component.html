@@ -1,29 +1,42 @@
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand mb-0 h1" href="">
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+        width="30" height="30"
+        viewBox="0 0 172 172"
+        style=" fill:#000000;"><defs><linearGradient x1="52.21633" y1="136.87975" x2="154.757" y2="34.33908" gradientUnits="userSpaceOnUse" id="color-1_HpPqCqynotVp_gr1"><stop offset="0" stop-color="#e67e22"></stop><stop offset="1" stop-color="#2ecc71"></stop></linearGradient></defs><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M87.72,105.049l-34.05958,34.05958l-47.97008,-47.97008c-2.80933,-2.80933 -2.80933,-7.36017 0,-10.1695l23.89008,-23.89008c2.80933,-2.80933 7.36017,-2.80933 10.1695,0z" fill="#e74c3c"></path><path d="M63.77258,149.21717l-23.89008,-23.89008c-2.80933,-2.80933 -2.80933,-7.36017 0,-10.1695l92.36758,-92.37475c2.80933,-2.80933 7.36017,-2.80933 10.1695,0l23.89008,23.89008c2.80933,2.80933 2.80933,7.36017 0,10.1695l-92.37117,92.37475c-2.80575,2.80575 -7.36017,2.80575 -10.16592,0z" fill="url(#color-1_HpPqCqynotVp_gr1)"></path></g></g></svg>
+      {{title}}
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+        </li>
 
-<!-- NavBar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand">
-    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-      width="30" height="30"
-      viewBox="0 0 172 172"
-      style=" fill:#000000;"><defs><linearGradient x1="52.21633" y1="136.87975" x2="154.757" y2="34.33908" gradientUnits="userSpaceOnUse" id="color-1_HpPqCqynotVp_gr1"><stop offset="0" stop-color="#e67e22"></stop><stop offset="1" stop-color="#2ecc71"></stop></linearGradient></defs><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M87.72,105.049l-34.05958,34.05958l-47.97008,-47.97008c-2.80933,-2.80933 -2.80933,-7.36017 0,-10.1695l23.89008,-23.89008c2.80933,-2.80933 7.36017,-2.80933 10.1695,0z" fill="#e74c3c"></path><path d="M63.77258,149.21717l-23.89008,-23.89008c-2.80933,-2.80933 -2.80933,-7.36017 0,-10.1695l92.36758,-92.37475c2.80933,-2.80933 7.36017,-2.80933 10.1695,0l23.89008,23.89008c2.80933,2.80933 2.80933,7.36017 0,10.1695l-92.37117,92.37475c-2.80575,2.80575 -7.36017,2.80575 -10.16592,0z" fill="url(#color-1_HpPqCqynotVp_gr1)"></path></g></g></svg>
-    {{title}}
-  </a>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Features
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="" (click)="dynamicDownloadJson()">Download JSON</a>
-          <a class="dropdown-item" href="" data-toggle="modal" data-target="#uploadFileModal">Upload JSON</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="" (click)="clearLocalStorage()">Clear Data</a>
-        </div>
-      </li>
-      <a class="nav-link" href="#aboutUs">About Us</a>
-    </ul>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+            Features
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="" (click)="jsonDownload()">Download JSON</a></li>
+            <li><a class="dropdown-item" href="" data-toggle="modal" data-target="#uploadFileModal">Upload JSON</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="" (click)="clearData()">Clear Data</a></li>
+          </ul>
+          
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact us</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -53,170 +66,19 @@
   </div>
 </div>
 
- <mat-divider ></mat-divider>
- <br/>
 
- <div class="container-fluid">
 
-  <div class="row">
-    <div class="input-group mb-3 input-group-lg col-md-3">
-      <input type="text" class="form-control" placeholder="Add todo" [(ngModel)]="newTodo.title" name="todo" (keyup.enter)="addTodo()">
-      <div class="input-group-prepend" (click)="addTodo()">
-        <span class="input-group-text info">
-          <svg width="24" height="24"  viewBox="0 0 16 16" class="bi bi-back" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
-          </svg>
-        </span>
-      </div>
-    </div>
+<br/>
+
+<router-outlet ></router-outlet>
+
+<!-- footer -->
+<nav class="navbar fixed-bottom navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">Quick Notes</a>
+    <textarea class="form-control" rows="7" placeholder="Any quick notes comes here" id="notes" [(ngModel)]="quickNotes" (ngModelChange)="addNotes()"></textarea>
   </div>
-  
-  <div class="row">
-    <div class="todo-container col-md-3">
-      <h2>Todo</h2>
-      <div
-        cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="newData"
-        [cdkDropListConnectedTo]="[activeList]"
-        class="todo-list new-todos-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="todo-box new-todos " *ngFor="let item of newData;let i = index"  cdkDrag 
-                  (mouseover)="isNewShow[i] = true"
-                  (mouseout)="isNewShow[i] = false">
-          
-          <label [hidden]="isNewEditable[i]">{{item.title}}</label>
-
-          <div class="btn-group" [hidden]="!isNewShow[i] || isNewEditable[i]" >
-            <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
-            <a class="btn" (click)="isNewEditable[i] = true"><i class="fa fa-edit"></i></a>
-          </div>
-
-          <div class="input-group " [hidden]="!isNewEditable[i]">
-            <textarea [(ngModel)]="item.title" class="form-control edit-box lb-2" aria-label="Update Field"></textarea>
-            <div class="input-group-prepend">
-              <button class="input-group-text btn-primary" (click)="isNewEditable[i] = false || updateTodo(item)">Save</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="todo-footer" *ngIf="todos.length > 0">
-        <span class="todo-count"><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
-      </div>
-    </div>
-
-    <div class="todo-container col-md-3">
-      <h2>Active</h2>
-      <div
-        cdkDropList
-        #activeList="cdkDropList"
-        [cdkDropListData]="activeData"
-        [cdkDropListConnectedTo]="[todoList,doneList]"
-        class="todo-list active-todos-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="todo-box active-todos" *ngFor="let item of activeData;let i = index" cdkDrag
-              (mouseover)="isActiveShow[i] = true"
-              (mouseout)="isActiveShow[i] = false">
-              <label [hidden]="isActiveEditable[i]">{{item.title}} </label>
-
-              <div class="btn-group" [hidden]="!isActiveShow[i] || isActiveEditable[i]" >
-                <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
-                <a class="btn" (click)="isActiveEditable[i] = true"><i class="fa fa-edit"></i></a>
-              </div>
-    
-              <div class="input-group " [hidden]="!isActiveEditable[i]">
-                <textarea [(ngModel)]="item.title" class="form-control edit-box lb-2" aria-label="Update Field"></textarea>
-                <div class="input-group-prepend">
-                  <button class="input-group-text btn-primary" (click)="isActiveEditable[i] = false || updateTodo(item)">Save</button>
-                </div>
-              </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="todo-container col-md-3">
-      <h2>Done</h2>
-  
-      <div
-        cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="doneData"
-        [cdkDropListConnectedTo]="[activeList]"
-        class="todo-list done-todos-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="todo-box done-todos" *ngFor="let item of doneData;let i = index" cdkDrag
-                  (mouseover)="isDoneShow[i] = true"
-                  (mouseout)="isDoneShow[i] = false">
-
-                  <label><del>{{item.title}}</del></label>
-
-                  <div class="btn-group" [hidden]="!isDoneShow[i]" >
-                    <a class="btn" (click)="removeTodo(item)"><i class="fa fa-remove"></i></a>
-                  </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3">
-      <h2>Chart</h2>
-
-      <div class="chart-wrapper">
-        <canvas baseChart 
-          [(data)]="doughnutChartData"
-          [labels]="doughnutChartLabels"
-          [chartType]="doughnutChartType"
-          [colors]="doughnutChartColors">
-        </canvas>
-      </div>
-    </div>
-  
-  </div>
-
-  <div class="form-group row quick-notes">
-    <h2 for="notes">Quick Notes:</h2>
-    <textarea class="form-control" rows="7" id="notes" [(ngModel)]="quickNotes" (ngModelChange)="addNotes()"></textarea>
-  </div>
-
-</div>
+</nav>
 
 
 
-
-
-<div class="container" id="aboutUs">
-
-  <h3>About Us</h3>
-  <p> This website is developed to provide the easiest way to manage your day to day activities in an agile manner. </p>
-  <p>Todo App is an efficient To-do list application in a progressive manner. This app is more useful for people who can track their daily activity in managing and progressive way. So, this app allows users to manage their tasks easily and visualize it chart format. The aim of this To Do will help you stay focused and organized your tasks with:</p>
-
-  <ol>
-    <li> Daily planner </li>
-    <li> Lists</li>
-    <li> Goal Planner </li>
-  </ol>
-  <h3>Features</h3>
-  <ol>
-    <li> Manage to-do lists in the dashboard </li>
-    <li> Shows the progress in chart format </li>
-    <li> Download your Todo's in JSON format (export) </li>
-    <li> Upload the downloaded JSON back to the dashboard (import) </li>
-    <li> Maintain quick notes across sessions </li>
-  </ol>
-  <h3>How To Use</h3>
-  <p> Add Todo tasks on top of the page will be added to Todo column </p>
-  <p>When the tasks are in progress, simply drag and drop the respective tasks to Active column</p>
-  <p>Later, if the tasks completed drag them to Done column</p>
-  <p>Any update or delete of a particular task can be done by edit or remove icon by hover over that tasks</p>
-  <p>Export or import the data in JSON format under the Features menu</p>
-  <p>Also to clear all the data, Clear data under Features menu will help to achieve it</p>
-  <p>Quick notes section will store your data for any quick referencesg</p>
-  <h3>Privacy Policy</h3>
-  <p>The to-do app does not store any of your data on our servers. It uses your browser's cache to store your data. </p>
-  <h4>Cookie Policy:</h4>
-  <b>This website uses cookies. The to-do app uses cookies to personalize content/ads and to analyze our traffic.</b>
-
-</div>

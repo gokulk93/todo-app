@@ -13,14 +13,22 @@ import {HttpClientModule} from '@angular/common/http'
 import {MatDividerModule} from '@angular/material/divider';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatMenuModule} from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { TodoComponent } from './todo/todo.component';
+import { BannerComponent } from './banner/banner.component'; 
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AboutUsComponent,
+    ContactUsComponent,
+    TodoComponent,
+    BannerComponent
   ],
   imports: [
     BrowserModule,

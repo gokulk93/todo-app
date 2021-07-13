@@ -12,7 +12,8 @@ export class TodoDataServiceService {
 
 
   todos: Todo[] =[];
-  quickNotes:string;
+  quickNotes:string | undefined;
+
 
   
 
@@ -20,24 +21,21 @@ export class TodoDataServiceService {
 
     if (localStorage.getItem("todo-key") !=null ){
       if(localStorage.getItem("todo-key").length != 0){
-        console.log("local storage available");
         this.todos = JSON.parse(localStorage.getItem("todo-key"));
       }else{
         console.log("local storage not availabel");      
       }
     }else{
-      console.log("local storage null");      
+      console.log("local storage is empty");      
     }
     if (localStorage.getItem("quick-notes") !=null ){
       if(localStorage.getItem("quick-notes").length != 0){
-        console.log("local storage available");
-        console.log("Notes::"+localStorage.getItem("quick-notes"));
         this.quickNotes = localStorage.getItem("quick-notes");
       }else{
         console.log("local storage not availabel");      
       }
     }else{
-      console.log("local storage null");      
+      console.log("local storage is empty");      
     }
    }
 
@@ -60,21 +58,6 @@ export class TodoDataServiceService {
     return this;
   }
 
-  addNotes(note:string){
-    this.quickNotes = note;
-    localStorage.setItem("quick-notes", this.quickNotes);
-
-  }
-
-
-  loadTodo(todo: Todo[]){
-
-    console.log("Loading the list");
-    this.todos = todo;
-    localStorage.setItem("todo-key", JSON.stringify(this.todos));
-  }
-
-
   // Simulate DELETE /todos/:id
   deleteTodoById(id: number): TodoDataServiceService {
     this.todos = this.todos
@@ -82,7 +65,6 @@ export class TodoDataServiceService {
     localStorage.setItem("todo-key", JSON.stringify(this.todos));
     return this;
   }
-
 
   // Simulate PUT /todos/:id
   updateTodoById(id: number, values: Object = {}): Todo {
@@ -97,44 +79,42 @@ export class TodoDataServiceService {
     return todo;
   }
 
-  clearStorage(){
-    console.log("Cleared")
-    this.todos=[];
-    this.quickNotes="";
-    localStorage.clear();
-  }
-
+  // Simulate GET /quickNotes
   getNotes(){
     return this.quickNotes;
   }
-  // Simulate GET /todos
+
+  // return all the todos
   getAllTodos(): Todo[] {
     return this.todos;
   }
 
-  // Simulate GET /todos
+  // return all the defined/new todos
   getNewTodos(): Todo[] {
     return this.todos
     .filter(todo => todo.flag === 1);
   }
 
-  // Simulate GET /todos/:id
+  // return todo by id
   getTodoById(id: number): Todo {
     return this.todos
       .filter(todo => todo.id === id)
       .pop();
   }
 
-  
+
+  // return all the active todos
   getActiveTodos(): Todo[] {
     return this.todos
       .filter(todo => todo.flag === 2);
   }
 
+  // return all completed todos
   getCompletedTodos(): Todo[] {
     return this.todos
       .filter(todo => todo.flag === 3);
   }
+
 
   getLastGeneratedId():number{
     if (localStorage.getItem("todo-key") !=null ){
@@ -154,6 +134,24 @@ export class TodoDataServiceService {
     }else{
       return 1;
     }
+  }
+
+
+
+  loadNotes(note:string){
+    this.quickNotes = note;
+    localStorage.setItem("quick-notes", this.quickNotes);
+  }
+
+  loadTodo(todo: Todo[]){
+    this.todos = todo;
+    localStorage.setItem("todo-key", JSON.stringify(this.todos));
+  }
+
+  clearStorage(){
+    this.todos=[];
+    this.quickNotes="";
+    localStorage.clear();
   }
   
 

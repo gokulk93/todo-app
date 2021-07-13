@@ -1,0 +1,140 @@
+/* rgba(156, 39, 176, 0.7);
+rgba(3, 169, 244, 0.7);
+rgba(76, 175, 80, 0.7) ; */
+
+/* 
+
+
+*/
+/* 
+.newTodos-text{
+    color: rgba(179, 8, 247, 0.7);
+}
+
+.active-text{
+    color: rgba(255, 169, 9, 0.7);
+}
+
+.completed-text{
+    color: rgba(27, 233, 34, 0.7) ;
+} */
+
+
+
+.todo-items{
+    overflow-y: auto;
+    max-height: 73vh;
+}
+
+.info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(57, 179, 215);
+    border-color: rgb(38, 154, 188);
+}
+
+.new-icon{
+    color: rgba(156, 39, 176, 0.7);
+}
+
+.todo-box:hover{
+    background-color: rgba(255, 255, 255, 0.918);
+
+}
+
+
+
+/* below are for drag and drop */
+.todo-container {
+    width: 400px;
+    max-width: 100%;
+    
+    /* margin: 0 25px 25px 0;  */
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .todo-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+  }
+  
+  .todo-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: auto;
+    background-color: rgb(253, 253, 253);
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .new-todos-list {
+    background:#98DBC6;
+    overflow-y: auto;
+    max-height: 50vh;
+  }
+
+  .active-todos-list{
+    background: #DFE166; 
+    overflow-y: auto;
+    max-height: 50vh;
+  }
+
+  .done-todos-list {
+    background:#3F681C;
+    overflow-y: auto;
+    max-height: 50vh;
+  }
+
+
+  /* font color of a box  */
+  .new-todos.todo-box {
+    color: #34a380;
+    
+  }
+
+  .active-todos.todo-box {
+    color: #9fa10a; 
+  }
+
+  .done-todos.todo-box {
+    color: #295205;
+  }
+  
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .todo-box:last-child {
+    border: none;
+  }
+  
+  .todo-list.cdk-drop-list-dragging .todo-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+
+  h2{
+    font-family: Arial, Helvetica, sans-serif;
+  }
